@@ -1,0 +1,1861 @@
+
+Yesterday 5:28 AM
+ngaho ima izo kode za buri page
+
+Yego, ndaziguha. Nk’uko twari turi gukora ConsolaCMS (Church Management System), nzaguha code za buri page ya dashboard:
+
+Dashboard Home
+
+Members
+
+Attendance
+
+Tithes
+
+Events
+
+Reports
+
+Settings
+
+Logout
+
+Turi gukoresha Next.js App Router, aho buri page iba muri app/.../page.tsx. 
+
+Structure izaba gutya:
+
+frontend/
+ └── src/
+     └── app/
+         └── dashboard/
+             ├── page.tsx
+             ├── members/
+             │    └── page.tsx
+             ├── attendance/
+             │    └── page.tsx
+             ├── tithes/
+             │    └── page.tsx
+             ├── events/
+             │    └── page.tsx
+             ├── reports/
+             │    └── page.tsx
+             ├── settings/
+             │    └── page.tsx
+             └── logout/
+                  └── page.tsx
+Tuzatangirira kuri Dashboard Home page:
+
+src/app/dashboard/page.tsx
+
+"use client";
+
+import StatsCard from "@/components/dashboard/StatsCard";
+import RevenueChart from "@/components/dashboard/RevenueChart";
+import MembersChart from "@/components/dashboard/MembersChart";
+import Activities from "@/components/dashboard/Activities";
+
+export default function DashboardPage() {
+
+  return (
+    <div className="p-6 space-y-6">
+
+      <h1 className="text-3xl font-bold">
+        Church Dashboard
+      </h1>
+
+
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+
+        <StatsCard
+          title="Members"
+          value="250"
+        />
+
+        <StatsCard
+          title="Total Tithes"
+          value="$12,500"
+        />
+
+        <StatsCard
+          title="Events"
+          value="18"
+        />
+
+        <StatsCard
+          title="Attendance"
+          value="85%"
+        />
+
+      </div>
+
+
+      <div className="grid md:grid-cols-2 gap-6">
+
+        <RevenueChart />
+
+        <MembersChart />
+
+      </div>
+
+
+      <Activities />
+
+    </div>
+  );
+}
+1. Members Page
+dashboard/members/page.tsx
+
+"use client";
+
+export default function MembersPage(){
+
+return (
+
+<div className="p-6">
+
+<h1 className="text-3xl font-bold">
+Members Management
+</h1>
+
+
+<button className="mt-5 bg-blue-600 text-white px-5 py-2 rounded">
+Add Member
+</button>
+
+
+<div className="mt-6 bg-white shadow rounded p-5">
+
+<table className="w-full">
+
+<thead>
+
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Role</th>
+</tr>
+
+</thead>
+
+
+<tbody>
+
+<tr>
+<td>John Doe</td>
+<td>john@gmail.com</td>
+<td>0780000000</td>
+<td>Member</td>
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+</div>
+
+
+</div>
+
+)
+
+}
+2. Attendance Page
+dashboard/attendance/page.tsx
+
+"use client";
+
+
+export default function AttendancePage(){
+
+
+return (
+
+<div className="p-6">
+
+
+<h1 className="text-3xl font-bold">
+Attendance Tracking
+</h1>
+
+
+<div className="mt-6 bg-white shadow p-5 rounded">
+
+
+<select className="border p-2">
+
+<option>
+Select Member
+</option>
+
+<option>
+John Doe
+</option>
+
+</select>
+
+
+<select className="border p-2 ml-3">
+
+<option>
+Present
+</option>
+
+<option>
+Absent
+</option>
+
+</select>
+
+
+<button className="bg-green-600 text-white px-5 py-2 ml-3 rounded">
+
+Save
+
+</button>
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+3. Tithes Page
+dashboard/tithes/page.tsx
+
+"use client";
+
+
+export default function TithesPage(){
+
+
+return (
+
+<div className="p-6">
+
+
+<h1 className="text-3xl font-bold">
+Tithes Management
+</h1>
+
+
+<div className="bg-white shadow rounded p-5 mt-6">
+
+
+<h2 className="text-xl">
+Total Donation
+</h2>
+
+
+<p className="text-4xl font-bold text-green-600">
+$12,500
+</p>
+
+
+<button className="mt-4 bg-blue-600 text-white px-5 py-2 rounded">
+
+Add Tithe
+
+</button>
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+4. Events Page
+dashboard/events/page.tsx
+
+"use client";
+
+
+export default function EventsPage(){
+
+
+return (
+
+<div className="p-6">
+
+
+<h1 className="text-3xl font-bold">
+Church Events
+</h1>
+
+
+<div className="grid md:grid-cols-3 gap-5 mt-6">
+
+
+<div className="shadow bg-white p-5 rounded">
+
+<h2 className="font-bold">
+Sunday Service
+</h2>
+
+<p>
+08 August 2026
+</p>
+
+</div>
+
+
+<div className="shadow bg-white p-5 rounded">
+
+<h2 className="font-bold">
+Youth Meeting
+</h2>
+
+<p>
+15 August 2026
+</p>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+5. Reports Page
+dashboard/reports/page.tsx
+
+"use client";
+
+
+export default function ReportsPage(){
+
+
+return (
+
+<div className="p-6">
+
+
+<h1 className="text-3xl font-bold">
+Reports
+</h1>
+
+
+<div className="grid md:grid-cols-3 gap-5 mt-6">
+
+
+<div className="bg-white shadow p-5 rounded">
+
+<h2>
+Members Report
+</h2>
+
+<button className="mt-3 bg-blue-600 text-white px-4 py-2 rounded">
+Download
+</button>
+
+</div>
+
+
+
+<div className="bg-white shadow p-5 rounded">
+
+<h2>
+Financial Report
+</h2>
+
+<button className="mt-3 bg-green-600 text-white px-4 py-2 rounded">
+Download
+</button>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+6. Settings Page
+dashboard/settings/page.tsx
+
+"use client";
+
+
+export default function SettingsPage(){
+
+
+return (
+
+<div className="p-6">
+
+
+<h1 className="text-3xl font-bold">
+Settings
+</h1>
+
+
+<div className="mt-6 bg-white shadow rounded p-5">
+
+
+<input
+className="border p-3 w-full"
+placeholder="Church Name"
+/>
+
+
+<input
+className="border p-3 w-full mt-3"
+placeholder="Phone"
+/>
+
+
+<button className="mt-4 bg-blue-600 text-white px-5 py-2 rounded">
+
+Save Changes
+
+</button>
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+7. Logout Page
+dashboard/logout/page.tsx
+
+"use client";
+
+import { useRouter } from "next/navigation";
+
+
+export default function LogoutPage(){
+
+const router = useRouter();
+
+
+function logout(){
+
+localStorage.removeItem("token");
+
+router.push("/login");
+
+}
+
+
+return (
+
+<div className="p-6">
+
+<h1 className="text-3xl font-bold">
+Logout
+</h1>
+
+
+<button
+onClick={logout}
+className="mt-5 bg-red-600 text-white px-6 py-2 rounded">
+
+Logout
+
+</button>
+
+
+</div>
+
+)
+
+}
+Izi ni frontend pages. Intambwe ikurikira ni ukuziha real data ziva muri NestJS API + Prisma (Members, Tithes, Attendance, Events) aho gukoresha data za example.
+
+
+Noneho dukore uburyo Admin ashobora gukora User mushya (Create User) muri ConsolaCMS.
+
+Workflow:
+
+Admin Dashboard
+      |
+      ↓
+Settings
+      |
+      ↓
+Users
+      |
+      ↓
++ Add User
+      |
+      ↓
+Fill Form
+      |
+      ↓
+Create Account
+      |
+      ↓
+User abona access
+1. Backend - Create User API
+DTO
+Kora:
+
+backend/src/users/dto/create-user.dto.ts
+
+export class CreateUserDto {
+
+firstName:string;
+
+lastName:string;
+
+email:string;
+
+password:string;
+
+role:
+"ADMIN" |
+"PASTOR" |
+"ACCOUNTANT" |
+"MEMBER";
+
+}
+2. Users Service
+users.service.ts
+
+ongeramo:
+
+import * as bcrypt from "bcrypt";
+
+
+async createUser(data:any){
+
+
+const exists =
+await this.prisma.user.findUnique({
+
+where:{
+email:data.email
+}
+
+});
+
+
+if(exists){
+
+throw new Error(
+"Email already exists"
+);
+
+}
+
+
+
+const hashedPassword =
+await bcrypt.hash(
+data.password,
+10
+);
+
+
+
+return this.prisma.user.create({
+
+data:{
+
+
+firstName:data.firstName,
+
+lastName:data.lastName,
+
+email:data.email,
+
+password:hashedPassword,
+
+role:data.role,
+
+
+}
+
+
+});
+
+
+}
+3. Controller
+users.controller.ts
+
+ongeramo:
+
+@Post()
+
+createUser(
+@Body() data:any
+){
+
+return this.service.createUser(data);
+
+}
+API:
+
+POST /api/v1/users
+Example:
+
+{
+"firstName":"John",
+"lastName":"Peter",
+"email":"john@church.com",
+"password":"123456",
+"role":"ACCOUNTANT"
+}
+FRONTEND
+4. Create User Modal
+Kora:
+
+src/components/users/AddUserModal.tsx
+Code:
+
+"use client";
+
+
+import {
+useState
+}
+from "react";
+
+
+import api from "@/lib/axios";
+
+
+export default function AddUserModal(){
+
+
+const [form,setForm]=useState({
+
+firstName:"",
+lastName:"",
+email:"",
+password:"",
+role:"MEMBER"
+
+});
+
+
+
+function change(e:any){
+
+setForm({
+
+...form,
+
+[e.target.name]:
+e.target.value
+
+});
+
+}
+
+
+
+async function submit(){
+
+
+await api.post(
+
+"/users",
+
+form
+
+);
+
+
+alert(
+"User created successfully"
+);
+
+
+}
+
+
+
+
+return (
+
+<div className="
+bg-white
+dark:bg-gray-900
+p-6
+rounded-xl
+shadow
+">
+
+
+<h2 className="
+text-xl
+font-bold
+">
+
+Create New User
+
+</h2>
+
+
+
+<input
+
+name="firstName"
+
+placeholder="First Name"
+
+className="input"
+
+onChange={change}
+
+/>
+
+
+
+<input
+
+name="lastName"
+
+placeholder="Last Name"
+
+className="input"
+
+onChange={change}
+
+/>
+
+
+
+<input
+
+name="email"
+
+placeholder="Email"
+
+className="input"
+
+onChange={change}
+
+/>
+
+
+
+<input
+
+name="password"
+
+type="password"
+
+placeholder="Password"
+
+className="input"
+
+onChange={change}
+
+/>
+
+
+
+<select
+
+name="role"
+
+className="input"
+
+onChange={change}
+
+>
+
+
+<option value="ADMIN">
+
+Admin
+
+</option>
+
+
+<option value="PASTOR">
+
+Pastor
+
+</option>
+
+
+<option value="ACCOUNTANT">
+
+Accountant
+
+</option>
+
+
+<option value="MEMBER">
+
+Member
+
+</option>
+
+
+</select>
+
+
+
+
+<button
+
+onClick={submit}
+
+className="
+bg-blue-600
+text-white
+px-5
+py-2
+rounded
+"
+
+>
+
+Create User
+
+</button>
+
+
+
+</div>
+
+)
+
+}
+5. Add muri Users Page
+Fungura:
+
+src/app/dashboard/settings/users/page.tsx
+Import:
+
+import AddUserModal
+from "@/components/users/AddUserModal";
+Hanyuma hejuru ya table:
+
+<AddUserModal/>
+Result kuri Admin
+Admin azabona:
+
+User Management
+
+
++ Create User
+
+
+--------------------------------
+
+First Name:
+[ John ]
+
+Last Name:
+[ Peter ]
+
+Email:
+[ john@church.com ]
+
+Password:
+[ ******** ]
+
+Role:
+
+[ ACCOUNTANT ▼ ]
+
+
+        CREATE USER
+
+--------------------------------
+Nyuma:
+
+Users List
+
+John Peter
+john@church.com
+
+Role:
+ACCOUNTANT
+
+Status:
+🟢 Active
+Security twongeraho nyuma:
+Admin permission guard (ADMIN gusa niwe ubona Create User)
+
+Email verification
+
+Force password change kuri first login
+
+Password strength checker
+
+2FA activation
+
+Iyi niyo nzira ikoreshwa muri SaaS systems nyinshi zo gucunga users.
+
+
+yego
+
+Noneho dukomeze kuri User Security Enhancements kugira ngo Create User System ibe ifite umutekano nka SaaS nyayo.
+
+Tuzongeramo:
+
+✅ Admin-only User Creation
+✅ Email Verification
+✅ Force Password Change on First Login
+✅ Password Strength Validation
+✅ Role Permission Guard
+
+1. Admin Only Guard
+Intego:
+
+ADMIN
+  ✅ Create User
+  ✅ Change Role
+  ✅ Delete User
+
+PASTOR
+  ❌ Cannot create users
+
+MEMBER
+  ❌ Cannot access users page
+Create Roles Decorator
+Kora:
+
+backend/src/auth/decorators/roles.decorator.ts
+import { SetMetadata } from '@nestjs/common';
+
+
+export const Roles =
+(...roles:string[])=>
+SetMetadata(
+"roles",
+roles
+);
+Roles Guard
+Kora:
+
+backend/src/auth/guards/roles.guard.ts
+import {
+CanActivate,
+ExecutionContext,
+Injectable
+}
+from "@nestjs/common";
+
+import { Reflector }
+from "@nestjs/core";
+
+
+@Injectable()
+
+export class RolesGuard
+implements CanActivate{
+
+
+constructor(
+private reflector:Reflector
+){}
+
+
+
+canActivate(
+context:ExecutionContext
+){
+
+
+const roles =
+this.reflector.get<string[]>(
+"roles",
+context.getHandler()
+);
+
+
+
+if(!roles){
+
+return true;
+
+}
+
+
+
+const request =
+context.switchToHttp()
+.getRequest();
+
+
+
+const user =
+request.user;
+
+
+
+return roles.includes(
+user.role
+);
+
+
+}
+
+}
+Apply kuri Create User API
+users.controller.ts
+
+@Post()
+
+@Roles("ADMIN")
+
+@UseGuards(
+JwtAuthGuard,
+RolesGuard
+)
+
+createUser(
+@Body() data:any
+){
+
+return this.service.createUser(data);
+
+}
+Ubu ADMIN gusa niwe ushobora gukora user.
+
+2. Email Verification
+Prisma
+Ongeramo muri User:
+
+model User {
+
+id String @id @default(uuid())
+
+email String @unique
+
+password String
+
+
+emailVerified Boolean 
+@default(false)
+
+
+verificationToken String?
+
+
+}
+Migrate:
+
+npx prisma migrate dev --name email_verification
+3. Generate Verification Token
+Muri users.service.ts:
+
+import {randomUUID}
+from "crypto";
+Muri createUser:
+
+const token =
+randomUUID();
+
+
+
+await this.prisma.user.create({
+
+data:{
+
+
+firstName:data.firstName,
+
+lastName:data.lastName,
+
+email:data.email,
+
+password:hashedPassword,
+
+role:data.role,
+
+
+verificationToken:token,
+
+
+emailVerified:false
+
+
+}
+
+});
+4. Send Verification Email
+Email izajya iba:
+
+Welcome to ConsolaCMS
+
+Click here to verify your account:
+
+http://localhost:3000/verify-email/token
+5. Verify Endpoint
+Controller:
+
+@Get(
+"verify/:token"
+)
+
+verifyEmail(
+
+@Param("token")
+token:string
+
+){
+
+return this.service.verifyEmail(token);
+
+}
+Service:
+
+async verifyEmail(token:string){
+
+
+const user =
+await this.prisma.user.findFirst({
+
+where:{
+verificationToken:token
+}
+
+});
+
+
+if(!user){
+
+throw new Error(
+"Invalid token"
+);
+
+}
+
+
+
+return this.prisma.user.update({
+
+where:{
+id:user.id
+},
+
+data:{
+
+
+emailVerified:true,
+
+verificationToken:null
+
+
+}
+
+});
+
+
+}
+6. Force Password Change
+Kuri User model:
+
+mustChangePassword Boolean
+@default(true)
+Iyo Admin akoze user:
+
+mustChangePassword:true
+Login nyuma:
+
+if(user.mustChangePassword){
+
+return {
+
+message:
+"CHANGE_PASSWORD_REQUIRED"
+
+}
+
+}
+Frontend imujyana:
+
+/change-password
+7. Password Strength Validation
+Install:
+
+npm install zxcvbn
+Frontend:
+
+import zxcvbn from "zxcvbn";
+
+
+const result =
+zxcvbn(password);
+
+
+if(result.score < 3){
+
+alert(
+"Password is too weak"
+);
+
+}
+Password nziza:
+
+✔ 8+ characters
+✔ Uppercase
+✔ Number
+✔ Symbol
+8. Users Page Protection
+Muri frontend:
+
+if(user.role !== "ADMIN"){
+
+router.push("/dashboard");
+
+}
+Ubu User Management iba:
+ADMIN
+
+ ├── Create User
+ ├── Assign Role
+ ├── Activate Account
+ ├── Reset Password
+ ├── View Login History
+ └── Audit Logs
+
+
+USER
+
+ └── Own Profile Only
+ConsolaCMS ubu ifite:
+
+✅ JWT Authentication
+✅ Role Based Access Control
+✅ User Management
+✅ Email Verification
+✅ Password Security
+✅ Audit Logs
+✅ Login History
+
+Intambwe ikurikira ikomeye ni Forgot Password + Reset Password via Email, kugira ngo user utibuka password ayisubirane neza.
+
+
+yego
+
+Noneho dukore Forgot Password + Reset Password via Email System muri ConsolaCMS.
+
+Workflow:
+
+User
+ |
+ | Forgot Password
+ ↓
+Enter Email
+ |
+ ↓
+Receive Reset Email
+ |
+ ↓
+Open Link
+ |
+ ↓
+Set New Password
+ |
+ ↓
+Login Again
+1. Update Prisma User Model
+Fungura:
+
+backend/prisma/schema.prisma
+ongeramo:
+
+model User {
+
+id String @id @default(uuid())
+
+firstName String
+
+lastName String
+
+email String @unique
+
+password String
+
+role Role
+
+
+resetToken String?
+
+resetTokenExpiry DateTime?
+
+
+createdAt DateTime @default(now())
+
+updatedAt DateTime @updatedAt
+
+}
+Migrate:
+
+npx prisma migrate dev --name add_password_reset
+2. Create Password Reset Service
+Kora:
+
+backend/src/auth/password-reset.service.ts
+Code:
+
+import { Injectable } from "@nestjs/common";
+
+import { PrismaService } from "../prisma/prisma.service";
+
+import { randomUUID } from "crypto";
+
+import * as bcrypt from "bcrypt";
+
+import { EmailService } from "../notifications/email.service";
+
+
+
+@Injectable()
+
+export class PasswordResetService {
+
+
+
+constructor(
+
+private prisma:PrismaService,
+
+private email:EmailService
+
+){}
+
+
+
+
+
+async requestReset(email:string){
+
+
+const user =
+await this.prisma.user.findUnique({
+
+where:{
+email
+}
+
+});
+
+
+
+if(!user){
+
+return;
+
+}
+
+
+
+
+const token =
+randomUUID();
+
+
+
+await this.prisma.user.update({
+
+where:{
+id:user.id
+},
+
+data:{
+
+
+resetToken:token,
+
+
+resetTokenExpiry:
+
+new Date(
+Date.now()+15*60*1000
+)
+
+
+}
+
+});
+
+
+
+
+
+const link =
+
+`http://localhost:3000/reset-password/${token}`;
+
+
+
+await this.email.sendEmail(
+
+email,
+
+"Reset Password",
+
+`
+
+Click here to reset your password:
+
+${link}
+
+
+This link expires in 15 minutes.
+
+`
+
+);
+
+
+
+return {
+
+message:
+"Reset email sent"
+
+};
+
+
+}
+
+
+
+
+
+async resetPassword(
+
+token:string,
+
+password:string
+
+){
+
+
+
+const user =
+
+await this.prisma.user.findFirst({
+
+where:{
+
+
+resetToken:token,
+
+
+resetTokenExpiry:{
+
+gt:new Date()
+
+}
+
+}
+
+
+});
+
+
+
+if(!user){
+
+throw new Error(
+"Invalid or expired token"
+);
+
+}
+
+
+
+
+
+const hash =
+
+await bcrypt.hash(
+password,
+10
+);
+
+
+
+
+return this.prisma.user.update({
+
+where:{
+id:user.id
+},
+
+data:{
+
+
+password:hash,
+
+
+resetToken:null,
+
+
+resetTokenExpiry:null,
+
+
+mustChangePassword:false
+
+
+}
+
+});
+
+
+}
+
+
+
+}
+3. Add Controller Routes
+Muri:
+
+auth.controller.ts
+ongeramo:
+
+@Post("forgot-password")
+
+forgotPassword(
+
+@Body()
+data:any
+
+){
+
+return this.passwordReset.requestReset(
+data.email
+);
+
+}
+
+
+
+
+
+
+@Post("reset-password")
+
+resetPassword(
+
+@Body()
+data:any
+
+){
+
+return this.passwordReset.resetPassword(
+
+data.token,
+
+data.password
+
+);
+
+}
+4. Frontend Forgot Password Page
+Kora:
+
+src/app/forgot-password/page.tsx
+Code:
+
+"use client";
+
+
+import {
+useState
+}
+from "react";
+
+
+import api from "@/lib/axios";
+
+
+
+export default function ForgotPassword(){
+
+
+const [email,setEmail]=useState("");
+
+
+
+async function submit(){
+
+
+await api.post(
+
+"/auth/forgot-password",
+
+{
+email
+}
+
+);
+
+
+alert(
+"Check your email"
+);
+
+
+}
+
+
+
+
+return (
+
+<div className="
+max-w-md
+mx-auto
+mt-20
+p-6
+shadow
+rounded-xl
+">
+
+
+<h1 className="
+text-2xl
+font-bold
+">
+
+Forgot Password
+
+</h1>
+
+
+
+<input
+
+className="
+border
+p-3
+w-full
+mt-5
+"
+
+placeholder="Email"
+
+onChange={
+e=>setEmail(e.target.value)
+}
+
+/>
+
+
+
+<button
+
+onClick={submit}
+
+className="
+bg-blue-600
+text-white
+p-3
+rounded
+mt-4
+w-full
+"
+
+>
+
+Send Reset Link
+
+</button>
+
+
+
+</div>
+
+)
+
+}
+5. Reset Password Page
+Kora:
+
+src/app/reset-password/[token]/page.tsx
+Code:
+
+"use client";
+
+
+import {
+useState
+}
+from "react";
+
+
+import {
+useParams
+}
+from "next/navigation";
+
+
+import api from "@/lib/axios";
+
+
+
+export default function ResetPassword(){
+
+
+const {token}=useParams();
+
+
+
+const [password,setPassword]=useState("");
+
+
+
+
+
+async function submit(){
+
+
+await api.post(
+
+"/auth/reset-password",
+
+{
+
+token,
+
+password
+
+}
+
+);
+
+
+alert(
+"Password changed"
+);
+
+
+}
+
+
+
+
+return (
+
+<div className="
+max-w-md
+mx-auto
+mt-20
+p-6
+shadow
+rounded
+">
+
+
+<h1 className="text-2xl font-bold">
+
+New Password
+
+</h1>
+
+
+
+<input
+
+type="password"
+
+className="
+border
+p-3
+w-full
+mt-5
+"
+
+placeholder="New password"
+
+onChange={
+e=>setPassword(e.target.value)
+}
+
+/>
+
+
+
+<button
+
+onClick={submit}
+
+className="
+bg-green-600
+text-white
+p-3
+rounded
+mt-4
+w-full
+"
+
+>
+
+Change Password
+
+</button>
+
+
+
+</div>
+
+)
+
+}
+Result
+User akanda:
+
+Login
+
+Email
+Password
+
+
+Forgot Password?
+Agashyiramo email:
+
+user@church.com
+Akabona:
+
+ConsolaCMS Password Reset
+
+Click:
+Reset Password
+Afungura:
+
+/reset-password/xxxxx
+Akora:
+
+New Password:
+********
+
+[Change Password]
+Ubu authentication ya ConsolaCMS ifite:
+
+✅ JWT Login
+✅ Email Verification
+✅ Forgot Password
+✅ Password Reset Link
+✅ Password Hashing
+✅ Force Password Change
+✅ Role Security
+✅ Audit Logs
+✅ Login History
+
+Intambwe ikurikira twakora ni Two Factor Authentication (2FA) via Email/Authenticator App kugira ngo Admin na Accountant barindwe kurushaho.
+
+

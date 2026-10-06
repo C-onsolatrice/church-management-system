@@ -1,0 +1,244 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Church {
+  id         String   @id @default(uuid())
+  name       String
+  legalRegNo String   @unique
+  address    String
+  phone      String?
+  email      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  branches Branch[]
+  users    User[]
+}
+
+model Branch {
+  id       String  @id @default(uuid())
+  name     String
+  location String
+  phone    String?
+  churchId String
+
+  church             Church              @relation(fields: [churchId], references: [id], onDelete: Cascade)
+  users              User[]
+  events             Event[]
+  attendance         Attendance[]
+  assets             Asset[]
+  members            Member[]
+  ministries         Ministry[]
+  announcements      Announcement[]
+  eventRegistrations EventRegistration[]
+  tithes             Tithe[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id           String  @id @default(uuid())
+  email        String  @unique
+  passwordHash String
+  name         String
+  firstName    String?
+  lastName     String?
+  phone        String?
+  phoneNumber  String?
+  role         String  @default("MEMBER")
+  status       String  @default("ACTIVE")
+  fcmToken     String?
+
+  branchId String?
+  branch   Branch? @relation(fields: [branchId], references: [id], onDelete: SetNull)
+
+  churchId String?
+  church   Church? @relation(fields: [churchId], references: [id], onDelete: SetNull)
+
+  isEmailVerified    Boolean   @default(false)
+  emailVerifiedAt    DateTime?
+  verificationToken  String?   @unique
+  resetPasswordToken String?   @unique
+  resetTokenExpires  DateTime?
+  refreshTokenHash   String?
+
+  attendance Attendance[]
+  tithes     Tithe[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Event {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  type        String?
+  date        DateTime
+  startDate   DateTime?
+  endDate     DateTime?
+  location    String?
+  capacity    Int?
+  isPublic    Boolean   @default(false)
+
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  attendance         Attendance[]
+  eventRegistrations EventRegistration[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Attendance {
+  id String @id @default(uuid())
+
+  memberId String
+  eventId  String
+  branchId String
+
+  present Boolean @default(true)
+  status  String  @default("PRESENT")
+  notes   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  member Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  event  Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  branch Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  @@index([memberId])
+  @@index([eventId])
+  @@index([branchId])
+}
+
+model Asset {
+  id              String    @id @default(uuid())
+  name            String
+  description     String?
+  category        String?
+  serialNumber    String?   @unique
+  purchaseDate    DateTime?
+  purchaseCost    Float?
+  salvageValue    Float?
+  usefulLifeYears Int?
+  state           String    @default("ACTIVE")
+  location        String?
+
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  maintenanceLogs MaintenanceLog[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MaintenanceLog {
+  id String @id @default(uuid())
+
+  assetId String
+  asset   Asset  @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  performedDate DateTime @default(now())
+  description   String
+  cost          Float?
+  performedBy   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Member {
+  id          String  @id @default(uuid())
+  firstName   String
+  lastName    String
+  email       String?
+  phoneNumber String?
+  status      String  @default("ACTIVE")
+
+  branchId String?
+  branch   Branch? @relation(fields: [branchId], references: [id], onDelete: SetNull)
+
+  eventRegistrations EventRegistration[]
+  tithes             Tithe[]
+  attendance         Attendance[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Ministry {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  members     Int     @default(0)
+
+  branchId String?
+  branch   Branch? @relation(fields: [branchId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Announcement {
+  id      String @id @default(uuid())
+  title   String
+  content String
+
+  branchId String?
+  branch   Branch? @relation(fields: [branchId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EventRegistration {
+  id String @id @default(uuid())
+
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventId, memberId])
+}
+
+model Tithe {
+  id            String  @id @default(uuid())
+  amount        Float
+  note          String?
+  paymentMethod String
+  description   String?
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  memberId String?
+  member   Member? @relation(fields: [memberId], references: [id], onDelete: SetNull)
+
+  branchId String
+  branch   Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
